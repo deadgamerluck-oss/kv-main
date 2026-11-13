@@ -7,10 +7,19 @@ import { cmsSchema, leadStatusSchema } from './cms-schema';
 export const getPublicContent = createServerFn({ method: 'GET' }).handler(async () => {
  const url = process.env['SUPABASE_URL']; const key = process.env['SUPABASE_PUBLISHABLE_KEY'];
  if (!url || !key) return null;
- const client = createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false }, global: { fetch: (input, init) => { const headers = new Headers(init?.headers); if (key.startsWith('sb_')) headers.delete('Authorization'); headers.set('apikey', key); return fetch(input, { ...init, headers }); } } });
- const { data, error } = await client.from('website_content').select('published').eq('key', 'site').maybeSingle();
- if (error) throw new Error('Website content could not load.');
-  const parsed = cmsSchema.safeParse(data?.published); return parsed.success ? { ...parsed.data, articles: parsed.data.articles.filter(a => a.status === 'published') } : null;
+ try {
+  const client = createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false }, global: { fetch: (input, init) => { const headers = new Headers(init?.headers); if (key.startsWith('sb_')) headers.delete('Authorization'); headers.set('apikey', key); return fetch(input, { ...init, headers }); } } });
+  const { data, error } = await client.from('website_content').select('published').eq('key', 'site').maybeSingle();
+  if (error) {
+   console.warn('Could not fetch website content from database, falling back to bundled defaults:', error.message);
+   return null;
+  }
+  const parsed = cmsSchema.safeParse(data?.published);
+  return parsed.success ? { ...parsed.data, articles: parsed.data.articles.filter(a => a.status === 'published') } : null;
+ } catch (err) {
+  console.warn('Website content request failed, falling back to bundled defaults:', err instanceof Error ? err.message : err);
+  return null;
+ }
 });
 
 export const getAdminData = createServerFn({ method: 'GET' }).middleware([requireSupabaseAuth]).handler(async ({ context }) => {
