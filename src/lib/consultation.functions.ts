@@ -1,7 +1,7 @@
 import { createServerFn } from '@tanstack/react-start';
 import { getRequestHeader } from '@tanstack/react-start/server';
 import { consultationSchema } from './cms-schema';
-export const submitConsultation = createServerFn({ method: 'POST' }).inputValidator((v: unknown) => consultationSchema.parse(v)).handler(async ({ data }) => {
+export const submitConsultation = createServerFn({ method: 'POST' }).validator((v: unknown) => consultationSchema.parse(v)).handler(async ({ data }) => {
  const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
  const identity = getRequestHeader('cf-connecting-ip') ?? data.phone.replace(/\D/g, '');
  const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`consultation:${identity}`));

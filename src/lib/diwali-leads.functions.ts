@@ -3,7 +3,7 @@ import { getRequestHeader } from "@tanstack/react-start/server";
 import { DIWALI_OFFER, diwaliLeadSchema } from "./diwali-offer";
 
 export const submitDiwaliLead = createServerFn({ method: "POST" })
-  .inputValidator((input: unknown) => diwaliLeadSchema.parse(input))
+  .validator((input: unknown) => diwaliLeadSchema.parse(input))
   .handler(async ({ data }) => {
     // This deliberately public endpoint may only create validated leads, never read them.
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");

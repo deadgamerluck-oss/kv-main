@@ -3,7 +3,7 @@ import { getRequestHeader } from '@tanstack/react-start/server';
 import { cmsSchema } from './cms-schema';
 import { isCampaignActive, popupLeadSchema, retireDiwali } from './popup-campaigns';
 
-export const submitPopupLead = createServerFn({ method: 'POST' }).inputValidator((input: unknown) => popupLeadSchema.parse(input)).handler(async ({ data }) => {
+export const submitPopupLead = createServerFn({ method: 'POST' }).validator((input: unknown) => popupLeadSchema.parse(input)).handler(async ({ data }) => {
   const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
   const { data: row, error: contentError } = await supabaseAdmin.from('website_content').select('published').eq('key', 'site').maybeSingle();
   const parsed = cmsSchema.safeParse(row?.published);

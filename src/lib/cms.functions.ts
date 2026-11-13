@@ -28,7 +28,7 @@ export const getAdminData = createServerFn({ method: 'GET' }).middleware([requir
 });
 
 export const saveContent = createServerFn({ method: 'POST' }).middleware([requireSupabaseAuth])
- .inputValidator((v: unknown) => z.object({ content: cmsSchema, publish: z.boolean(), version: z.number().int().min(0) }).parse(v))
+ .validator((v: unknown) => z.object({ content: cmsSchema, publish: z.boolean(), version: z.number().int().min(0) }).parse(v))
  .handler(async ({ data, context }) => {
   const { data: allowed } = await context.supabase.rpc('has_role', { _user_id: context.userId, _role: 'admin' });
   if (!allowed) throw new Error('Administrator access required.');
@@ -38,7 +38,7 @@ export const saveContent = createServerFn({ method: 'POST' }).middleware([requir
  });
 
 export const updateLead = createServerFn({ method: 'POST' }).middleware([requireSupabaseAuth])
- .inputValidator((v: unknown) => z.object({ id: z.string().uuid(), source: z.enum(['diwali', 'consultation', 'popup']), status: leadStatusSchema, notes: z.string().max(5000) }).parse(v))
+ .validator((v: unknown) => z.object({ id: z.string().uuid(), source: z.enum(['diwali', 'consultation', 'popup']), status: leadStatusSchema, notes: z.string().max(5000) }).parse(v))
  .handler(async ({ data, context }) => {
   const { data: allowed } = await context.supabase.rpc('has_role', { _user_id: context.userId, _role: 'admin' });
   if (!allowed) throw new Error('Administrator access required.');
