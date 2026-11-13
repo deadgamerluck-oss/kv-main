@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1792323678964,
+      "tag": "0000_create_diwali_leads",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792466246644,
+      "tag": "0001_admin_content_and_enquiries",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793598770746,
+      "tag": "0002_pin_single_admin_identity",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1793679517919,
+      "tag": "0003_general_popup_leads",
+      "breakpoints": true
+    }
+  ]
+}

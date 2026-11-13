@@ -1,0 +1,3 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { LegalPage } from "@/components/site/content-pages";
+export const Route = createFileRoute("/terms")({ head: () => ({ meta: [{ title: "Terms and Conditions — Kshitij Vivan" }, { name: "description", content: "Terms covering programme information and website enquiries for Kshitij Vivan." }, { property: "og:title", content: "Terms and Conditions — Kshitij Vivan" }, { property: "og:description", content: "Programme information and enquiry terms." }, { property: "og:type", content: "website" }, { property: "og:url", content: "/terms" }, { name: "twitter:card", content: "summary_large_image" }], links: [{ rel: "canonical", href: "/terms" }] }), component: () => <LegalPage type="terms" /> });

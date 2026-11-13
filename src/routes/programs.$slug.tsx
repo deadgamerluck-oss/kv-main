@@ -1,0 +1,11 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ProgramDetailPage } from "@/components/site/content-pages";
+import { useSiteContent } from "@/components/site/content-provider";
+import { programs } from "@/data/site-content";
+import { publicContentOptions } from '@/components/site/content-provider';
+export const Route = createFileRoute("/programs/$slug")({
+  loader: async ({ context }) => (await context.queryClient.ensureQueryData(publicContentOptions))?.programs ?? programs,
+  head: ({ params, loaderData }) => { const program = (loaderData ?? programs).find((item) => item.slug === params.slug); const title = program ? `${program.title} Course in Ahmedabad — Kshitij Vivan` : "Programme not found — Kshitij Vivan"; const description = program?.short ?? "Explore verified creative programmes at Kshitij Vivan."; return { meta: [{ title }, { name: "description", content: description }, { property: "og:title", content: title }, { property: "og:description", content: description }, { property: "og:type", content: "website" }, { property: "og:url", content: `/programs/${params.slug}` }, { name: "twitter:card", content: "summary_large_image" }], links: [{ rel: "canonical", href: `/programs/${params.slug}` }], scripts: program ? [{ type: "application/ld+json", children: JSON.stringify({ "@context": "https://schema.org", "@type": "Course", name: program.title, description: program.short, provider: { "@type": "EducationalOrganization", name: "Kshitij Vivan" } }) }] : [] }; },
+  component: ProgramRoute,
+});
+function ProgramRoute() { const { programs } = useSiteContent(); const { slug } = Route.useParams(); const program = programs.find((item) => item.slug === slug); if (!program) return <section className="mx-auto max-w-3xl px-5 py-28 text-center"><h1 className="font-display text-5xl font-semibold">Programme not found</h1><Link to="/programs" className="mt-7 inline-block font-bold text-primary">View all programmes</Link></section>; return <ProgramDetailPage program={program} />; }

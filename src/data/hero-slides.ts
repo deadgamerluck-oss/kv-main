@@ -1,0 +1,9 @@
+import heroImage from '@/assets/creative-studio-hero.jpg';
+import characterImg from '@/assets/project-character.jpg';
+import motionImg from '@/assets/project-motion.jpg';
+import type { SiteContent } from '@/lib/cms-schema';
+export const defaultSlides: SiteContent['slides'] = [
+ { kicker: 'Courses · Online & Offline batches', lines: ['Design.', 'Animate.', 'Create.'], copy: 'Graphic Design, 3D Animation, VFX, UI/UX, Video & Motion and Game Design — structured, module-by-module courses with mentor feedback.', image: heroImage, alt: 'Creative learners working with a mentor', cta: { label: 'Explore courses', to: '/programs' }, chips: ['6 creative programmes', 'Live online batches', 'Ahmedabad classroom', 'Industry tools'] },
+ { kicker: 'Achievements · Since 2011', lines: ['Learners', 'across the', 'world.'], copy: 'From our Ahmedabad studio to learners joining live from cities across India and around the world — building careers in creative fields since 2011.', image: characterImg, alt: 'Student character design work', cta: { label: 'See student work', to: '/work' }, chips: ['Teaching since 2011', 'Worldwide online learners', 'Portfolio-led outcomes', 'Mentor guidance'] },
+ { kicker: 'Careers · What you can achieve', lines: ['Build the', 'portfolio that', 'gets you hired.'], copy: 'Finish with real project work, presentation skills and interview readiness for studio, agency and freelance roles.', image: motionImg, alt: 'Motion design project frame', cta: { label: 'View the curriculum', to: '/curriculum' }, chips: ['Real briefs', 'Portfolio reviews', 'Interview prep', 'Career guidance'] },
+];

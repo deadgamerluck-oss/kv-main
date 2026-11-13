@@ -1,0 +1,3 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { VideosPage } from "@/components/site/content-pages";
+export const Route = createFileRoute("/videos")({ head: () => ({ meta: [{ title: "Creative Video Gallery — Kshitij Vivan" }, { name: "description", content: "Explore video-led creative processes and project directions from Kshitij Vivan in Ahmedabad." }, { property: "og:title", content: "Kshitij Vivan video gallery" }, { property: "og:description", content: "Creative process and project video directions." }, { property: "og:type", content: "website" }, { property: "og:url", content: "/videos" }, { name: "twitter:card", content: "summary_large_image" }], links: [{ rel: "canonical", href: "/videos" }] }), component: VideosPage });
